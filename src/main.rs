@@ -3,7 +3,7 @@ use eframe::egui::{self};
 fn main() {
     let native_options = eframe::NativeOptions::default();
     eframe::run_native(
-        "MyEguiApp",
+        "Rust man",
         native_options,
         Box::new(|cc| Box::new(MyEguiApp::new(cc))),
     )
@@ -46,7 +46,7 @@ impl eframe::App for MyEguiApp {
             }
 
             if let Some(picked_path) = &self.picked_path {
-                if self.texture.as_ref().unwrap().name() != picked_path.as_str() {
+                if self.texture.as_ref().map(|t|t.name()) != Some(picked_path.to_string()) {
                     let cimg: egui::ColorImage = load_image_from_path(picked_path).unwrap();
                     self.texture =
                         Some(ui.ctx().load_texture(picked_path, cimg, Default::default()));
